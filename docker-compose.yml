@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    tty: true
+    entrypoint:
+      - yarn
+      - start
+    volumes:
+      - ./frontend:/app:delegated
+      - /app/node_modules
