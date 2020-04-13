@@ -13,3 +13,27 @@ services:
     volumes:
       - ./frontend:/app:delegated
       - /app/node_modules
+  backend:
+    container_name: api
+    build:
+      args:
+        RAILS_ENV: development
+      context: ./api
+    ports:
+      - 4000:3000
+    depends_on:
+      - db
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./api:/app_home
+  db:
+    container_name: db
+    image: postgres:11.6-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:
