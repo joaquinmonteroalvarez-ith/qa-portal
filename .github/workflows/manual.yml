@@ -2,18 +2,17 @@ name: Manually triggered workflow
 on:
   workflow_dispatch:
     inputs:
-      name:
-        description: 'Person to greet'
+      ref:
+        description: 'Commit or branch to Deploy'
         required: true
-        default: 'Mona the Octocat'
-      home:
-        description: 'location'
-        required: false
+        default: 'master'
 
 jobs:
   say_hello:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.inputs.ref }}
     - run: |
-        echo "Hello ${{ github.event.inputs.name }}!"
-        echo "- in ${{ github.event.inputs.home }}!"
+        echo "Hello ${{ github.event.inputs.ref }}!"
