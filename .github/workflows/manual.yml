@@ -16,3 +16,4 @@ jobs:
         ref: ${{ github.event.inputs.ref }}
     - run: |
         echo "Hello ${{ github.event.inputs.ref }}!"
+        cat hola.txt
