@@ -17,16 +17,20 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - name: Check Tag
+      id: check-tag
+      run: |
+        if [[ $GITHUB_REF =~ @teladochealth/admin@v[0-9]+\.[0-9]+\.[0-9]+\-stg$ ]]; then
+            echo ::set-output name=match::true
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
     # Runs a single command using the runners shell
     - name: Run a one-line script
+      if: steps.check-tag.outputs.match == 'true'
       run: echo Hello, world!
 
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
-      env:
-        IMAGE_TAG: $GITHUB_REF
       run: |
-        echo $IMAGE_TAG
+        echo $GITHUB_REF
