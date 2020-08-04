@@ -20,7 +20,7 @@ jobs:
     - name: Check Tag
       id: check-tag
       run: |
-        if [[ $GITHUB_REF =~ @teladochealth/admin@v[0-9]+\.[0-9]+\.[0-9]+\-stg$ ]]; then
+        if [[ $GITHUB_REF =~ ^refs/tags/@teladochealth/admin@v[0-9]+\.[0-9]+\.[0-9]+\-stg$ ]]; then
             echo ::set-output name=match::true
         fi
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
