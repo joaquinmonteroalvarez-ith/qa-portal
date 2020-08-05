@@ -23,19 +23,14 @@ jobs:
         if [[ $GITHUB_REF =~ ^refs/tags/@teladochealth/admin@v[0-9]+\.[0-9]+\.[0-9]+\-stg$ ]]; then
             echo ::set-output name=match::true
         fi
-    - name: Trim Tag
-      id: trim-tag
-      run: |
-        echo ::set-output name=tag::cut -c 32- $GITHUB_REF
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Set env
+      run: echo ::set-env name=TAG::$(echo $GITHUB_REF | cut -c 32-)
     - uses: actions/checkout@v2
-
     # Runs a single command using the runners shell
     - name: Run a one-line script
       if: steps.check-tag.outputs.match == 'true'
       run: echo Hello, world!
-
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
       run: |
-        echo {steps.trim-tag.outputs.tag}
+        echo $TAG
